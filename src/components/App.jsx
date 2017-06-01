@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 //import { bindActionCreators } from 'redux'; //removed since redux does it
-import { addReminder} from '../actions';
+import { addReminder, deleteReminder } from '../actions';
 
 
 import '../App.css';  //not sure if this line is needed
@@ -12,28 +12,64 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      text: ''
+      text: '',
+      dueDate: ''
     }
   }
 
   addReminder(){
 //    console.log('this.state', this.state);
-    console.log('this', this);
-    this.props.addReminder(this.state.text);
+    //console.log('this', this);
+    console.log('this.state.dueDate', this.state.dueDate);
+    this.props.addReminder(this.state.text, this.state.dueDate);
+  }
 
+  deleteReminder(id){
+    console.log('deleting in application', id);
+    console.log('this.props', this.props);
+    this.props.deleteReminder(id);
+  }
+  renderReminders(){
+    const { reminders } = this.props;
+//    console.log('reminders', reminders); //removed once we know its working
+  return(
+      <ul className="list-group col-sm-4">
+        {
+          reminders.map(reminder => {
+            return (
+              <li key={reminder.id} className="list-group-item">
+                  <div className="list-item">{reminder.text}</div>
+                  <div
+                    className="list-item delete-button"
+                    onClick={() => this.deleteReminder(reminder.id)}
+                  >
+                    &#x2715;
+                  </div>
+              </li>
+            )
+          })
+        }
+      </ul>
+    )
   }
   render(){
+//    console.log('this.props', this.props); ///deleted to prevent console overflow
     return (
       <div className="App">
         <div className="title">
-          Reminder Cookies Pro
+          Reminder Cookies
         </div>
-        <div className="form-inline">
+        <div className="form-inline reminder-form">
           <div className="form-group">
             <input
               className="form-control"
               placeholder="I have to..."
               onChange={event => this.setState({text: event.target.value})}
+              />
+              <input
+                className="form-control"
+                type="datetime-local"
+                onChange={event => this.setState({dueDate: event.target.value})}
               />
           </div>
           <button
@@ -44,9 +80,9 @@ class App extends Component {
             >
             Add Reminder
           </button>
-
-
         </div>
+        { this.renderReminders() }
+
       </div>
 
     )
@@ -54,4 +90,9 @@ class App extends Component {
 
 }
 
-export default connect(null, { addReminder })(App);
+function mapStateToProps(state){
+  return {
+    reminders: state
+  }
+}
+export default connect(mapStateToProps, { addReminder, deleteReminder })(App);
