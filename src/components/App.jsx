@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators } from 'redux'; //removed since redux does it
 import { addReminder} from '../actions';
 
 
@@ -19,6 +19,8 @@ class App extends Component {
   addReminder(){
 //    console.log('this.state', this.state);
     console.log('this', this);
+    this.props.addReminder(this.state.text);
+
   }
   render(){
     return (
@@ -37,7 +39,8 @@ class App extends Component {
           <button
             type="button"
             className="btn btn-success"
-            onClick={event => this.setSTate({text: event.target.value})}
+            //onClick={event => this.setState({text: event.target.value})}
+            onClick={() => this.addReminder()}
             >
             Add Reminder
           </button>
