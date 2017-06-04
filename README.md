@@ -1,11 +1,11 @@
-# Goal Boss
-A ReactJS goal list manager for multiple users via Firebase.
+# Reminder Cookies
+A ReactJS reminder list manager with cookies baked into the browser.
 
 ## Getting Started
 ### Prerequisites
 - ReactJS
 - Redux
-- Firebase
+
 ### Installing
 
 ## Running the Tests
