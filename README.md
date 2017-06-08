@@ -17,7 +17,7 @@ A ReactJS reminder list manager with cookies baked into the browser.
 ## Deployment
 
 ## Built With
-- Mac OSX Sierra
+- Mac OS Sierra
 - Atom
 - iTerm2
 
